@@ -140,26 +140,34 @@
             border: 4px solid var(--bg-color);
         }
 
-        /* --- Blurred Translucent Discord Status Box --- */
+        /* --- Enhanced Translucent Discord Rich Presence Card --- */
         .discord-status-box {
-            width: 280px;
+            width: 300px;
             background: rgba(22, 15, 17, 0.5); /* 0.5 Transparency */
-            backdrop-filter: blur(12px);       /* Blurred background */
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);       /* High fidelity blur */
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 71, 87, 0.15);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1.2rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            gap: 1rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             transition: var(--transition-smooth);
+        }
+
+        .discord-status-box:hover {
+            border-color: rgba(255, 165, 2, 0.4);
+            box-shadow: 0 20px 40px rgba(255, 71, 87, 0.1);
+            transform: translateY(-2px);
         }
 
         .discord-header {
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.6rem;
         }
 
         .status-dot {
@@ -182,26 +190,123 @@
             color: var(--text-main);
         }
 
-        .discord-activity {
+        /* Rich Presence Container */
+        .presence-display {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            animation: fadeInActivity 0.4s ease forwards;
+        }
+
+        .presence-asset-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .presence-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .presence-icon:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .presence-small-icon {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+            background: var(--bg-color);
+        }
+
+        .presence-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .presence-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .presence-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .presence-details, .presence-state {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Smooth Live Progress Slider */
+        .presence-timeline {
+            width: 100%;
+            margin-top: 0.4rem;
+        }
+
+        .timeline-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timeline-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            transition: width 1s linear;
+        }
+
+        .timeline-stamps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .discord-activity-fallback {
             font-size: 0.9rem;
             color: var(--text-muted);
             line-height: 1.4;
-            margin-top: 0.2rem;
         }
 
-        .discord-activity a {
+        .discord-activity-fallback a {
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
         }
-        
-        .discord-activity a:hover {
-            text-decoration: underline;
-        }
 
-        .activity-title {
-            color: var(--text-main);
-            font-weight: 600;
+        @keyframes fadeInActivity {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- Mutual Toggling Sections --- */
@@ -364,7 +469,7 @@
             .hero-container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
             .hero-buttons { justify-content: center; }
             .profile-card { width: 240px; height: 240px; }
-            .discord-status-box { width: 240px; }
+            .discord-status-box { width: 280px; }
             header { padding: 1.5rem 5%; }
             section { padding: 6rem 5% 3rem; }
             #hero h1 { font-size: 2.8rem; }
@@ -374,7 +479,6 @@
 </head>
 <body>
 
-    <!-- Eye View Tracker Widget -->
     <div class="eye-counter" id="eyeCounter">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
@@ -382,7 +486,6 @@
         <span id="viewCount">0</span>
     </div>
 
-    <!-- Header Navigation -->
     <header id="navbar">
         <a href="#hero" class="logo">dexntzx<span>.</span></a>
         <nav>
@@ -391,7 +494,6 @@
         </nav>
     </header>
 
-    <!-- Main Hero Body -->
     <section id="hero">
         <div class="hero-container">
             <div class="hero-content">
@@ -403,25 +505,24 @@
                 </div>
             </div>
             
-            <!-- Right Hand Side Profile Stack -->
             <div class="profile-wrapper">
                 <div class="profile-card">
                     <img src="avatar.png" alt="Discord Profile Avatar" class="profile-avatar" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
                 </div>
                 
-                <!-- Blended Live Status Box Component -->
                 <div class="discord-status-box">
                     <div class="discord-header">
                         <div class="status-dot" id="discordDot"></div>
                         <div class="discord-name" id="discordName">Connecting...</div>
                     </div>
-                    <div class="discord-activity" id="discordActivity">Syncing presence data...</div>
+                    <div id="discordContent">
+                        <div class="discord-activity-fallback">Syncing presence data...</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Me Section -->
     <section id="about" class="hidden-section">
         <h2 class="section-title">About Me</h2>
         <div class="about-container">
@@ -438,7 +539,6 @@
         </div>
     </section>
 
-    <!-- Current Projects Section -->
     <section id="current-projects" class="hidden-section">
         <h2 class="section-title">Current Focus</h2>
         <div class="focus-text">
@@ -446,9 +546,8 @@
         </div>
     </section>
 
-    <!-- JavaScript Module -->
     <script>
-        // --- YOUR PRE-CONFIGURED DISCORD ID ---
+        // Your Verified Discord User ID String
         const DISCORD_USER_ID = "1391072149304774716"; 
 
         // Sticky Header Backdrop control
@@ -524,6 +623,25 @@
         localStorage.setItem('dex_domain_views', uniqueSiteViews);
         document.getElementById('viewCount').innerText = uniqueSiteViews;
 
+        // Clean formatting helper for track/activity duration numbers
+        function formatTimeSpan(milliseconds) {
+            if (isNaN(milliseconds) || milliseconds < 0) return "0:00";
+            const seconds = Math.floor((milliseconds / 1000) % 60);
+            const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Helper logic to properly parse Lanyard's complex CDN image asset strings
+        function formatAssetUrl(appId, assetId) {
+            if (!assetId) return 'https://i.imgur.com/8Km9tLL.png'; // Fallback icon
+            if (assetId.startsWith('mp:external/')) {
+                return `https://media.discordapp.net/external/${assetId.replace('mp:external/', '')}`;
+            }
+            return `https://cdn.discordapp.com/app-assets/${appId}/${assetId}.png`;
+        }
+
+        let dynamicTimelineTracker = null;
+
         // --- Live Lanyard Discord Presence Integration ---
         async function fetchDiscordPresence() {
             try {
@@ -531,63 +649,144 @@
                 const resData = await response.json();
                 
                 const dot = document.getElementById('discordDot');
-                const activityEl = document.getElementById('discordActivity');
                 const nameEl = document.getElementById('discordName');
+                const contentContainer = document.getElementById('discordContent');
 
-                // If Lanyard cannot find your ID or access your account status
+                // Clear ongoing timeline render intervals between fetch requests
+                if(dynamicTimelineTracker) clearInterval(dynamicTimelineTracker);
+
                 if (!resData.success) {
                     nameEl.innerText = "Setup Required";
-                    activityEl.innerHTML = "Click to join <a href='https://lanyard.rest' target='_blank'>lanyard.rest</a> to allow status syncing.";
+                    contentContainer.innerHTML = `<div class="discord-activity-fallback">Click to join <a href='https://lanyard.rest' target='_blank'>lanyard.rest</a> to enable status tracking sync.</div>`;
                     return;
                 }
 
                 const data = resData.data;
 
-                // Dynamically fetch and display your genuine Discord profile names
+                // Set user name
                 if (data.discord_user) {
                     nameEl.innerText = data.discord_user.global_name || data.discord_user.username;
                 }
 
-                // Update Status Indicator Glow Class
+                // Update Status indicator color classes
                 dot.className = `status-dot ${data.discord_status}`;
 
-                // Parse Status Context Text
-                let statusCleanText = "Offline";
-                if(data.discord_status === "dnd") statusCleanText = "Do Not Disturb";
-                if(data.discord_status === "idle") statusCleanText = "Idle";
-                if(data.discord_status === "online") statusCleanText = "Online";
+                let plainTextStatus = "Offline";
+                if(data.discord_status === "dnd") plainTextStatus = "Do Not Disturb";
+                if(data.discord_status === "idle") plainTextStatus = "Idle";
+                if(data.discord_status === "online") plainTextStatus = "Online";
 
-                // Read rich presence activity blocks
-                if (data.activities && data.activities.length > 0) {
-                    const realActivities = data.activities.filter(act => act.type !== 4);
-                    const customStatus = data.activities.find(act => act.type === 4);
+                // Priority 1: Render Spotify Rich Card layout
+                if (data.listening_to_spotify && data.spotify) {
+                    contentContainer.innerHTML = `
+                        <div class="presence-display">
+                            <div class="presence-asset-wrapper">
+                                <img class="presence-icon" src="${data.spotify.album_art_url}" alt="Album Art">
+                                <img class="presence-small-icon" src="https://i.imgur.com/vH9tX5Z.png" alt="Spotify">
+                            </div>
+                            <div class="presence-info">
+                                <span class="presence-type">Listening to Spotify</span>
+                                <span class="presence-title">${data.spotify.song}</span>
+                                <span class="presence-details">by ${data.spotify.artist}</span>
+                                <span class="presence-state">on ${data.spotify.album}</span>
+                            </div>
+                        </div>
+                        <div class="presence-timeline">
+                            <div class="timeline-bar-bg">
+                                <div class="timeline-bar-fill" id="trackProgressFill"></div>
+                            </div>
+                            <div class="timeline-stamps">
+                                <span id="trackTimeCurrent">0:00</span>
+                                <span id="trackTimeTotal">0:00</span>
+                            </div>
+                        </div>
+                    `;
 
-                    if (realActivities.length > 0) {
-                        const currentGame = realActivities[0];
-                        let activityDetails = "";
-                        if(currentGame.details) activityDetails = `<br><span style="font-size:0.85rem;">${currentGame.details}</span>`;
+                    const fillBar = document.getElementById('trackProgressFill');
+                    const timeCurrent = document.getElementById('trackTimeCurrent');
+                    const timeTotal = document.getElementById('trackTimeTotal');
+
+                    const startTimestamp = data.spotify.timestamps.start;
+                    const endTimestamp = data.spotify.timestamps.end;
+                    const totalDuration = endTimestamp - startTimestamp;
+
+                    timeTotal.innerText = formatTimeSpan(totalDuration);
+
+                    // Local accurate frame loop updater for track timeline slider mechanics
+                    function refreshTimelineSlider() {
+                        const activeElapsed = Date.now() - startTimestamp;
+                        const percentageComputed = Math.min((activeElapsed / totalDuration) * 100, 100);
                         
-                        activityEl.innerHTML = `<span class="activity-title">Playing ${currentGame.name}</span>${activityDetails}`;
-                    } else if (customStatus) {
-                        let emojiHtml = "";
-                        if (customStatus.emoji && customStatus.emoji.name) {
-                            emojiHtml = `${customStatus.emoji.name} `;
+                        fillBar.style.width = `${percentageComputed}%`;
+                        timeCurrent.innerText = formatTimeSpan(activeElapsed);
+                        
+                        if(activeElapsed >= totalDuration) {
+                            clearInterval(dynamicTimelineTracker);
                         }
-                        activityEl.innerHTML = `Status: <em>"${emojiHtml}${customStatus.state || ''}"</em>`;
-                    } else {
-                        activityEl.innerHTML = `Currently ${statusCleanText}`;
                     }
-                } else {
-                    activityEl.innerHTML = `Currently ${statusCleanText}`;
+
+                    refreshTimelineSlider();
+                    dynamicTimelineTracker = setInterval(refreshTimelineSlider, 1000);
+                    return;
                 }
+
+                // Priority 2: Filter and render Games, Rich Presence Apps or Streams
+                const filteredActivities = data.activities ? data.activities.filter(act => act.type !== 4) : [];
+                
+                if (filteredActivities.length > 0) {
+                    const primaryActivity = filteredActivities[0];
+                    
+                    // Determine readable context types (Playing, Streaming, etc.)
+                    let typeTextLabel = "Playing";
+                    if (primaryActivity.type === 1) typeTextLabel = "Streaming";
+                    if (primaryActivity.type === 2) typeTextLabel = "Listening to";
+                    if (primaryActivity.type === 3) typeTextLabel = "Watching";
+                    if (primaryActivity.type === 5) typeTextLabel = "Competing in";
+
+                    // Handle missing artwork images by using default values smoothly
+                    let activityImgUrl = 'https://i.imgur.com/8Km9tLL.png';
+                    if (primaryActivity.assets && primaryActivity.assets.large_image) {
+                        activityImgUrl = formatAssetUrl(primaryActivity.application_id, primaryActivity.assets.large_image);
+                    }
+
+                    contentContainer.innerHTML = `
+                        <div class="presence-display">
+                            <div class="presence-asset-wrapper">
+                                <img class="presence-icon" src="${activityImgUrl}" alt="Activity Art" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
+                            </div>
+                            <div class="presence-info">
+                                <span class="presence-type">${typeTextLabel}</span>
+                                <span class="presence-title">${primaryActivity.name}</span>
+                                ${primaryActivity.details ? `<span class="presence-details">${primaryActivity.details}</span>` : ''}
+                                ${primaryActivity.state ? `<span class="presence-state">${primaryActivity.state}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Priority 3: Custom plain text status statuses
+                const customTextStatusBlock = data.activities ? data.activities.find(act => act.type === 4) : null;
+                if (customTextStatusBlock) {
+                    let customEmojiStr = "";
+                    if (customTextStatusBlock.emoji && customTextStatusBlock.emoji.name) {
+                        customEmojiStr = `${customTextStatusBlock.emoji.name} `;
+                    }
+                    contentContainer.innerHTML = `<div class="discord-activity-fallback">Status: <em>"${customEmojiStr}${customTextStatusBlock.state || ''}"</em></div>`;
+                    return;
+                }
+
+                // Priority 4: Total fallback baseline indicator
+                contentContainer.innerHTML = `<div class="discord-activity-fallback">Currently ${plainTextStatus}</div>`;
+
             } catch (err) {
-                document.getElementById('discordActivity').innerText = "Status link down.";
+                document.getElementById('discordContent').innerHTML = `<div class="discord-activity-fallback">Status framework link down.</div>`;
             }
         }
 
-        // Trigger updates on initialization and auto-poll every 15 seconds
+        // Initialize status updates and interval trackers
         fetchDiscordPresence();
-        setInterval(fetchDiscordPresence, 15000);
+        setInterval(fetchDiscordPresence, 16000); // Poll API every 16s to respect rate limits
     </script>
 </body>
 </html>
