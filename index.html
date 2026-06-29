@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dexntzx | Portfolio</title>
     <style>
-        /* --- Redesigned Discord-Matching Color Palette --- */
+        /* --- Discord-Matching Color Palette --- */
         :root {
-            --bg-color: #0a0708;       /* Deep warm obsidian black */
-            --card-bg: #160f11;        /* Dark crimson charcoal */
+            --bg-color: #0a0708;       
+            --card-bg: #160f11;        
             --text-main: #fbfafb;
             --text-muted: #a6989a;
-            --accent: #ff4757;         /* Vibrant Coral Red from Avatar */
-            --accent-orange: #ffa502;  /* Warm Gold/Orange Accent */
+            --accent: #ff4757;         /* Vibrant Coral Red */
+            --accent-orange: #ffa502;  /* Warm Gold/Orange */
             --accent-gradient: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            
+            /* Status Colors */
+            --online: #23a55a;
+            --idle: #f0b232;
+            --dnd: #f23f43;
+            --offline: #80848e;
         }
 
         * {
@@ -60,9 +66,7 @@
             letter-spacing: -0.5px;
         }
 
-        .logo span {
-            color: var(--accent);
-        }
+        .logo span { color: var(--accent); }
 
         nav a {
             font-size: 0.95rem;
@@ -73,9 +77,7 @@
             transition: var(--transition-smooth);
         }
 
-        nav a:hover {
-            color: var(--accent);
-        }
+        nav a:hover { color: var(--accent); }
 
         /* --- Layout & Dual Column Hero --- */
         section {
@@ -94,18 +96,19 @@
             width: 100%;
         }
 
-        /* --- Profile Display (Replaces Your Red Circle) --- */
+        /* --- Right Column Profile Stack --- */
         .profile-wrapper {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            gap: 1.5rem;
             position: relative;
         }
 
         .profile-card {
             position: relative;
-            width: 320px;
-            height: 320px;
+            width: 280px;
+            height: 280px;
             border-radius: 50%;
             background: var(--card-bg);
             padding: 8px;
@@ -115,7 +118,6 @@
             align-items: center;
         }
 
-        /* Animated decorative gradient frame */
         .profile-card::before {
             content: '';
             position: absolute;
@@ -138,6 +140,60 @@
             border: 4px solid var(--bg-color);
         }
 
+        /* --- Blurred Translucent Discord Status Box --- */
+        .discord-status-box {
+            width: 280px;
+            background: rgba(22, 15, 17, 0.5); /* 0.5 Transparency */
+            backdrop-filter: blur(12px);       /* Blurred background */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 71, 87, 0.15);
+            border-radius: 16px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .discord-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--offline);
+            box-shadow: 0 0 8px var(--offline);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .status-dot.online { background-color: var(--online); box-shadow: 0 0 10px var(--online); }
+        .status-dot.idle { background-color: var(--idle); box-shadow: 0 0 10px var(--idle); }
+        .status-dot.dnd { background-color: var(--dnd); box-shadow: 0 0 10px var(--dnd); }
+        .status-dot.offline { background-color: var(--offline); box-shadow: 0 0 10px var(--offline); }
+
+        .discord-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .discord-activity {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-top: 0.2rem;
+        }
+
+        .activity-title {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
         /* --- Mutual Toggling Sections --- */
         .hidden-section {
             display: none; 
@@ -147,11 +203,7 @@
             border-top: 1px solid rgba(255, 71, 87, 0.05);
         }
 
-        .hidden-section.reveal-active {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .hidden-section.reveal-active { display: flex; opacity: 1; transform: translateY(0); }
 
         .section-title {
             font-size: 2.5rem;
@@ -162,7 +214,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- Hero Typography & Copy --- */
+        /* --- Hero Typography --- */
         #hero h1 {
             font-size: 4.5rem;
             font-weight: 800;
@@ -189,7 +241,7 @@
             display: flex;
             gap: 1.2rem;
             flex-wrap: wrap;
-            perspective: 1000px; /* Activates clean 3D tilting space */
+            perspective: 1000px; 
         }
 
         /* --- Immersive Gradient & 3D Interactive Buttons --- */
@@ -215,15 +267,13 @@
             transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Magnetic Text Styling Inside Button */
         .btn span {
             display: block;
             pointer-events: none;
             transition: transform 0.15s linear;
-            transform: translateZ(15px); /* Forces text depth */
+            transform: translateZ(15px); 
         }
 
-        /* Interactive Dynamic Radial Aura Overlay */
         .btn::before {
             content: '';
             position: absolute;
@@ -234,20 +284,9 @@
             pointer-events: none;
         }
 
-        .btn:hover::before {
-            opacity: 1;
-        }
-
-        .btn:hover {
-            border-color: var(--accent-orange);
-            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.15);
-        }
-
-        .btn-active-state {
-            background: rgba(255, 71, 87, 0.15) !important;
-            border-color: var(--accent) !important;
-            box-shadow: inset 0 0 12px rgba(255, 71, 87, 0.2);
-        }
+        .btn:hover::before { opacity: 1; }
+        .btn:hover { border-color: var(--accent-orange); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.15); }
+        .btn-active-state { background: rgba(255, 71, 87, 0.15) !important; border-color: var(--accent) !important; }
 
         /* --- About Section Formatting --- */
         .about-container {
@@ -282,24 +321,11 @@
             transition: var(--transition-smooth);
         }
 
-        .skill-tag:hover {
-            border-color: var(--accent-orange);
-            color: var(--accent-orange);
-            transform: translateY(-4px);
-        }
+        .skill-tag:hover { border-color: var(--accent-orange); color: var(--accent-orange); transform: translateY(-4px); }
 
         /* --- Project Focus Formatting --- */
-        .focus-text {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            max-width: 850px;
-            line-height: 1.8;
-        }
-        
-        .focus-text strong {
-            color: var(--text-main);
-            border-bottom: 2px dashed var(--accent);
-        }
+        .focus-text { font-size: 1.5rem; color: var(--text-muted); max-width: 850px; line-height: 1.8; }
+        .focus-text strong { color: var(--text-main); border-bottom: 2px dashed var(--accent); }
 
         /* --- Eye Traffic Counter --- */
         .eye-counter {
@@ -322,17 +348,13 @@
             user-select: none;
         }
 
-        .eye-counter svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--accent);
-        }
+        .eye-counter svg { width: 20px; height: 20px; fill: var(--accent); }
 
-        /* Responsive Adaptations */
         @media (max-width: 968px) {
             .hero-container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
             .hero-buttons { justify-content: center; }
-            .profile-card { width: 260px; height: 260px; order: -1; margin: 0 auto; }
+            .profile-card { width: 240px; height: 240px; }
+            .discord-status-box { width: 240px; }
             header { padding: 1.5rem 5%; }
             section { padding: 6rem 5% 3rem; }
             #hero h1 { font-size: 2.8rem; }
@@ -372,6 +394,14 @@
                 <div class="profile-card">
                     <img src="avatar.png" alt="Discord Profile Avatar" class="profile-avatar" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
                 </div>
+                
+                <div class="discord-status-box">
+                    <div class="discord-header">
+                        <div class="status-dot" id="discordDot"></div>
+                        <div class="discord-name">dex<span>_</span></div>
+                    </div>
+                    <div class="discord-activity" id="discordActivity">Loading status...</div>
+                </div>
             </div>
         </div>
     </section>
@@ -400,6 +430,9 @@
     </section>
 
     <script>
+        // --- YOUR DISCORD ID INTEGRATION ---
+        const DISCORD_USER_ID = "1391072149304774716"; 
+
         // Sticky Header Backdrop control
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -410,30 +443,23 @@
             }
         });
 
-        // --- Dual Accordion Toggling Architecture ---
+        // Dual Accordion Toggling Architecture
         function revealToggleAndScroll(e, sectionId, buttonElement) {
             if (e) e.preventDefault();
             
             const targetSection = document.getElementById(sectionId);
             const allSections = ['about', 'current-projects'];
-            
-            // Check if selected partition is already unfolded
             const isAlreadyOpen = targetSection.classList.contains('reveal-active');
             
-            // Instantly clear out all structural flags
             allSections.forEach(id => {
                 document.getElementById(id).classList.remove('reveal-active');
             });
             document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('btn-active-state'));
 
             if (isAlreadyOpen) {
-                // If it was already open, close it and scroll back safely to home view
                 document.getElementById('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
-                // Open selected window and synchronize matching controls
                 targetSection.classList.add('reveal-active');
-                
-                // Match visual focus states for navigation and hero panels concurrently
                 if(sectionId === 'about') document.getElementById('btn-about').classList.add('btn-active-state');
                 if(sectionId === 'current-projects') document.getElementById('btn-projects').classList.add('btn-active-state');
                 
@@ -443,24 +469,18 @@
             }
         }
 
-        // --- Immersive 3D Tilt & Light Tracker Logic ---
+        // Immersive 3D Tilt & Aura Tracker Logic
         const interactiveButtons = document.querySelectorAll('.btn');
-
         interactiveButtons.forEach(button => {
             const innerText = button.querySelector('span');
-            
             button.addEventListener('mousemove', (e) => {
                 const boundaries = button.getBoundingClientRect();
-                
-                // Track relative cursor positions within coordinates
                 const mouseX = e.clientX - boundaries.left;
                 const mouseY = e.clientY - boundaries.top;
                 
-                // Apply spatial CSS variable parameters for aura glow
                 button.style.setProperty('--x', `${mouseX}px`);
                 button.style.setProperty('--y', `${mouseY}px`);
                 
-                // 3D Tilting Rotational calculations
                 const centerPointX = boundaries.width / 2;
                 const centerPointY = boundaries.height / 2;
                 const maxRotationDegrees = 10; 
@@ -468,29 +488,70 @@
                 const calculatedTiltX = ((centerPointY - mouseY) / centerPointY) * maxRotationDegrees;
                 const calculatedTiltY = ((mouseX - centerPointX) / centerPointX) * maxRotationDegrees;
                 
-                // Direct matrix update execution
                 button.style.transform = `rotateX(${calculatedTiltX}deg) rotateY(${calculatedTiltY}deg) translateY(-3px)`;
-                
-                // Micro tilting effect applied internally onto text structure
                 if (innerText) {
                     innerText.style.transform = `translateZ(20px) translateX(${(mouseX - centerPointX) * 0.15}px) translateY(${(mouseY - centerPointY) * 0.15}px)`;
                 }
             });
 
             button.addEventListener('mouseleave', () => {
-                // Snap cleanly back to rest parameters upon boundary exit
                 button.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
-                if (innerText) {
-                    innerText.style.transform = 'translateZ(15px) translateX(0px) translateY(0px)';
-                }
+                if (innerText) { innerText.style.transform = 'translateZ(15px) translateX(0px) translateY(0px)'; }
             });
         });
 
-        // --- Unique Page Visitor Load Counter Tracker ---
+        // Unique Page Visitor Load Counter Tracker
         let uniqueSiteViews = localStorage.getItem('dex_domain_views') ? parseInt(localStorage.getItem('dex_domain_views')) : 0;
         uniqueSiteViews++;
         localStorage.setItem('dex_domain_views', uniqueSiteViews);
         document.getElementById('viewCount').innerText = uniqueSiteViews;
+
+        // --- Live Lanyard Discord Presence Integration ---
+        async function fetchDiscordPresence() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+                const resData = await response.json();
+                
+                if (!resData.success) return;
+
+                const data = resData.data;
+                const dot = document.getElementById('discordDot');
+                const activityEl = document.getElementById('discordActivity');
+
+                // Update Status Indicator Class
+                dot.className = `status-dot ${data.discord_status}`;
+
+                // Parse Status Context Text
+                let statusCleanText = data.discord_status.toUpperCase();
+                if(data.discord_status === "dnd") statusCleanText = "Do Not Disturb";
+
+                // Read rich presence activity blocks
+                if (data.activities && data.activities.length > 0) {
+                    const realActivities = data.activities.filter(act => act.type !== 4);
+                    const customStatus = data.activities.find(act => act.type === 4);
+
+                    if (realActivities.length > 0) {
+                        const currentGame = realActivities[0];
+                        let activityDetails = "";
+                        if(currentGame.details) activityDetails = `<br><span style="font-size:0.85rem;">${currentGame.details}</span>`;
+                        
+                        activityEl.innerHTML = `<span class="activity-title">Playing ${currentGame.name}</span>${activityDetails}`;
+                    } else if (customStatus) {
+                        activityEl.innerHTML = `Status: <em>"${customStatus.state || customStatus.name}"</em>`;
+                    } else {
+                        activityEl.innerHTML = `Currently ${statusCleanText}`;
+                    }
+                } else {
+                    activityEl.innerHTML = `Currently ${statusCleanText}`;
+                }
+            } catch (err) {
+                document.getElementById('discordActivity').innerText = "Status offline or disconnected.";
+            }
+        }
+
+        // Trigger updates on initialization and auto-poll every 15 seconds
+        fetchDiscordPresence();
+        setInterval(fetchDiscordPresence, 15000);
     </script>
 </body>
 </html>
