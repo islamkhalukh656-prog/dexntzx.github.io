@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dexntzx | Portfolio</title>
     <style>
-        /* --- Design System & Variables --- */
+        /* --- Redesigned Discord-Matching Color Palette --- */
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #151f32;
-            --text-main: #f1f5f9;
-            --text-muted: #64748b;
-            --accent: #a855f7; /* Royal Purple */
-            --accent-hover: #c084fc;
+            --bg-color: #0a0708;       /* Deep warm obsidian black */
+            --card-bg: #160f11;        /* Dark crimson charcoal */
+            --text-main: #fbfafb;
+            --text-muted: #a6989a;
+            --accent: #ff4757;         /* Vibrant Coral Red from Avatar */
+            --accent-orange: #ffa502;  /* Warm Gold/Orange Accent */
+            --accent-gradient: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -27,6 +28,7 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
+            overflow-x: hidden;
         }
 
         /* --- Navbar --- */
@@ -44,10 +46,10 @@
         }
 
         header.scrolled {
-            background: rgba(11, 15, 25, 0.8);
+            background: rgba(10, 7, 8, 0.8);
             backdrop-filter: blur(16px);
             padding: 1rem 10%;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 71, 87, 0.1);
         }
 
         .logo {
@@ -75,21 +77,74 @@
             color: var(--accent);
         }
 
-        /* --- Sections Layout --- */
+        /* --- Layout & Dual Column Hero --- */
         section {
             min-height: 100vh;
-            padding: 8rem 10% 4rem;
+            padding: 6rem 10% 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* Hidden Sections Styling */
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- Profile Display (Replaces Your Red Circle) --- */
+        .profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile-card {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            padding: 8px;
+            box-shadow: 0 20px 50px rgba(255, 71, 87, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animated decorative gradient frame */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 4px;
+            background: var(--accent-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-color);
+        }
+
+        /* --- Mutual Toggling Sections --- */
         .hidden-section {
-            display: none; /* Completely hidden by default */
+            display: none; 
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(40px);
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            border-top: 1px solid rgba(255, 71, 87, 0.05);
         }
 
         .hidden-section.reveal-active {
@@ -102,9 +157,12 @@
             font-size: 2.5rem;
             margin-bottom: 3rem;
             position: relative;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* --- Hero Section & Buttons --- */
+        /* --- Hero Typography & Copy --- */
         #hero h1 {
             font-size: 4.5rem;
             font-weight: 800;
@@ -114,7 +172,9 @@
         }
 
         #hero h1 span {
-            color: var(--accent);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         #hero p {
@@ -127,46 +187,72 @@
 
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
+            perspective: 1000px; /* Activates clean 3D tilting space */
         }
 
+        /* --- Immersive Gradient & 3D Interactive Buttons --- */
         .btn {
-            display: inline-block;
-            padding: 0.9rem 2.2rem;
-            background-color: var(--accent);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.4rem;
+            background: rgba(255, 255, 255, 0.03);
             color: white;
             font-weight: 600;
+            font-size: 1rem;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
-            border: none;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            overflow: hidden;
+            user-select: none;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Magnetic Text Styling Inside Button */
+        .btn span {
+            display: block;
+            pointer-events: none;
+            transition: transform 0.15s linear;
+            transform: translateZ(15px); /* Forces text depth */
+        }
+
+        /* Interactive Dynamic Radial Aura Overlay */
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle 100px at var(--x, 0px) var(--y, 0px), rgba(255, 71, 87, 0.35), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
         }
 
         .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 24px rgba(168, 85, 247, 0.3);
+            border-color: var(--accent-orange);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.15);
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--accent);
-            color: var(--text-main);
-            box-shadow: none;
+        .btn-active-state {
+            background: rgba(255, 71, 87, 0.15) !important;
+            border-color: var(--accent) !important;
+            box-shadow: inset 0 0 12px rgba(255, 71, 87, 0.2);
         }
 
-        .btn-secondary:hover {
-            background-color: rgba(168, 85, 247, 0.1);
-            box-shadow: 0 6px 24px rgba(168, 85, 247, 0.1);
-        }
-
-        /* --- About Me Section --- */
+        /* --- About Section Formatting --- */
         .about-container {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 1.3fr 0.7fr;
             gap: 4rem;
             align-items: start;
             width: 100%;
@@ -174,14 +260,14 @@
 
         .about-text p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1rem;
         }
 
@@ -191,22 +277,22 @@
             text-align: center;
             border-radius: 8px;
             font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            font-weight: 600;
+            border: 1px solid rgba(255, 71, 87, 0.05);
             transition: var(--transition-smooth);
         }
 
         .skill-tag:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
             transform: translateY(-4px);
         }
 
-        /* --- Focus Section --- */
+        /* --- Project Focus Formatting --- */
         .focus-text {
             font-size: 1.5rem;
             color: var(--text-muted);
-            max-width: 800px;
+            max-width: 850px;
             line-height: 1.8;
         }
         
@@ -215,14 +301,14 @@
             border-bottom: 2px dashed var(--accent);
         }
 
-        /* --- Eye Visit Counter --- */
+        /* --- Eye Traffic Counter --- */
         .eye-counter {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: rgba(21, 31, 50, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(22, 15, 17, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 71, 87, 0.15);
             padding: 0.6rem 1.2rem;
             border-radius: 50px;
             display: flex;
@@ -232,7 +318,7 @@
             font-weight: 700;
             color: var(--text-main);
             z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             user-select: none;
         }
 
@@ -242,26 +328,15 @@
             fill: var(--accent);
         }
 
-        /* --- Animations --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Responsive Adaptations */
+        @media (max-width: 968px) {
+            .hero-container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .profile-card { width: 260px; height: 260px; order: -1; margin: 0 auto; }
             header { padding: 1.5rem 5%; }
             section { padding: 6rem 5% 3rem; }
             #hero h1 { font-size: 2.8rem; }
             .about-container { grid-template-columns: 1fr; gap: 3rem; }
-            .hero-buttons { flex-direction: column; width: 100%; }
-            .btn { text-align: center; }
         }
     </style>
 </head>
@@ -277,17 +352,27 @@
     <header id="navbar">
         <a href="#hero" class="logo">dexntzx<span>.</span></a>
         <nav>
-            <a href="#" onclick="revealAndScroll('about')">About</a>
-            <a href="#" onclick="revealAndScroll('current-projects')">Projects</a>
+            <a href="#" onclick="revealToggleAndScroll(event, 'about', this)">About</a>
+            <a href="#" onclick="revealToggleAndScroll(event, 'current-projects', this)">Projects</a>
         </nav>
     </header>
 
     <section id="hero">
-        <h1 class="reveal active">Creative <br><span>Digital Space</span>.</h1>
-        <p class="reveal active">Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
-        <div class="hero-buttons">
-            <button onclick="revealAndScroll('about')" class="btn reveal active">Explore My World</button>
-            <button onclick="revealAndScroll('current-projects')" class="btn btn-secondary reveal active">Something I'm working on</button>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Creative <br><span>Digital Space</span>.</h1>
+                <p>Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
+                <div class="hero-buttons">
+                    <button id="btn-about" onclick="revealToggleAndScroll(event, 'about', this)" class="btn"><span>Explore My World</span></button>
+                    <button id="btn-projects" onclick="revealToggleAndScroll(event, 'current-projects', this)" class="btn"><span>Something I'm working on</span></button>
+                </div>
+            </div>
+            
+            <div class="profile-wrapper">
+                <div class="profile-card">
+                    <img src="avatar.png" alt="Discord Profile Avatar" class="profile-avatar" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
+                </div>
+            </div>
         </div>
     </section>
 
@@ -315,7 +400,7 @@
     </section>
 
     <script>
-        // Sticky Navbar logic
+        // Sticky Header Backdrop control
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 30) {
@@ -325,31 +410,87 @@
             }
         });
 
-        // Function to safely reveal sections and smoothly glide to them
-        function revealAndScroll(sectionId) {
-            const section = document.getElementById(sectionId);
+        // --- Dual Accordion Toggling Architecture ---
+        function revealToggleAndScroll(e, sectionId, buttonElement) {
+            if (e) e.preventDefault();
             
-            // Make section active and visible
-            section.classList.add('reveal-active');
+            const targetSection = document.getElementById(sectionId);
+            const allSections = ['about', 'current-projects'];
             
-            // Force child elements to display their inner layout properties immediately
-            const innerReveals = section.querySelectorAll('.reveal');
-            innerReveals.forEach(el => el.classList.add('active'));
+            // Check if selected partition is already unfolded
+            const isAlreadyOpen = targetSection.classList.contains('reveal-active');
+            
+            // Instantly clear out all structural flags
+            allSections.forEach(id => {
+                document.getElementById(id).classList.remove('reveal-active');
+            });
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('btn-active-state'));
 
-            // Smooth scroll down to the newly uncovered area
-            setTimeout(() => {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
+            if (isAlreadyOpen) {
+                // If it was already open, close it and scroll back safely to home view
+                document.getElementById('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // Open selected window and synchronize matching controls
+                targetSection.classList.add('reveal-active');
+                
+                // Match visual focus states for navigation and hero panels concurrently
+                if(sectionId === 'about') document.getElementById('btn-about').classList.add('btn-active-state');
+                if(sectionId === 'current-projects') document.getElementById('btn-projects').classList.add('btn-active-state');
+                
+                setTimeout(() => {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            }
         }
 
-        // --- Brand New Visit/Page-load Counter System ---
-        // Using a fresh local storage key ('dexntzx_total_views') to completely reset previous data
-        let currentViews = localStorage.getItem('dexntzx_total_views') ? parseInt(localStorage.getItem('dexntzx_total_views')) : 0;
-        
-        // Advance view count by 1 immediately upon page loading
-        currentViews++;
-        localStorage.setItem('dexntzx_total_views', currentViews);
-        document.getElementById('viewCount').innerText = currentViews;
+        // --- Immersive 3D Tilt & Light Tracker Logic ---
+        const interactiveButtons = document.querySelectorAll('.btn');
+
+        interactiveButtons.forEach(button => {
+            const innerText = button.querySelector('span');
+            
+            button.addEventListener('mousemove', (e) => {
+                const boundaries = button.getBoundingClientRect();
+                
+                // Track relative cursor positions within coordinates
+                const mouseX = e.clientX - boundaries.left;
+                const mouseY = e.clientY - boundaries.top;
+                
+                // Apply spatial CSS variable parameters for aura glow
+                button.style.setProperty('--x', `${mouseX}px`);
+                button.style.setProperty('--y', `${mouseY}px`);
+                
+                // 3D Tilting Rotational calculations
+                const centerPointX = boundaries.width / 2;
+                const centerPointY = boundaries.height / 2;
+                const maxRotationDegrees = 10; 
+                
+                const calculatedTiltX = ((centerPointY - mouseY) / centerPointY) * maxRotationDegrees;
+                const calculatedTiltY = ((mouseX - centerPointX) / centerPointX) * maxRotationDegrees;
+                
+                // Direct matrix update execution
+                button.style.transform = `rotateX(${calculatedTiltX}deg) rotateY(${calculatedTiltY}deg) translateY(-3px)`;
+                
+                // Micro tilting effect applied internally onto text structure
+                if (innerText) {
+                    innerText.style.transform = `translateZ(20px) translateX(${(mouseX - centerPointX) * 0.15}px) translateY(${(mouseY - centerPointY) * 0.15}px)`;
+                }
+            });
+
+            button.addEventListener('mouseleave', () => {
+                // Snap cleanly back to rest parameters upon boundary exit
+                button.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
+                if (innerText) {
+                    innerText.style.transform = 'translateZ(15px) translateX(0px) translateY(0px)';
+                }
+            });
+        });
+
+        // --- Unique Page Visitor Load Counter Tracker ---
+        let uniqueSiteViews = localStorage.getItem('dex_domain_views') ? parseInt(localStorage.getItem('dex_domain_views')) : 0;
+        uniqueSiteViews++;
+        localStorage.setItem('dex_domain_views', uniqueSiteViews);
+        document.getElementById('viewCount').innerText = uniqueSiteViews;
     </script>
 </body>
 </html>
