@@ -11,7 +11,7 @@
             --card-bg: #151f32;
             --text-main: #f1f5f9;
             --text-muted: #64748b;
-            --accent: #a855f7; /* Royal Purple Accent */
+            --accent: #a855f7; /* Royal Purple */
             --accent-hover: #c084fc;
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -84,6 +84,20 @@
             justify-content: center;
         }
 
+        /* Hidden Sections Styling */
+        .hidden-section {
+            display: none; /* Completely hidden by default */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .hidden-section.reveal-active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .section-title {
             font-size: 2.5rem;
             margin-bottom: 3rem;
@@ -125,8 +139,10 @@
             font-weight: 600;
             text-decoration: none;
             border-radius: 8px;
+            cursor: pointer;
             transition: var(--transition-smooth);
             box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+            border: none;
         }
 
         .btn:hover {
@@ -153,6 +169,7 @@
             grid-template-columns: 1.2fr 1fr;
             gap: 4rem;
             align-items: start;
+            width: 100%;
         }
 
         .about-text p {
@@ -185,7 +202,7 @@
             transform: translateY(-4px);
         }
 
-        /* --- New Focus Section --- */
+        /* --- Focus Section --- */
         .focus-text {
             font-size: 1.5rem;
             color: var(--text-muted);
@@ -198,7 +215,7 @@
             border-bottom: 2px dashed var(--accent);
         }
 
-        /* --- Interactive Eye Counter --- */
+        /* --- Eye Visit Counter --- */
         .eye-counter {
             position: fixed;
             bottom: 25px;
@@ -217,7 +234,6 @@
             z-index: 1000;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             user-select: none;
-            transition: var(--transition-smooth);
         }
 
         .eye-counter svg {
@@ -255,34 +271,33 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
         </svg>
-        <span id="clickCount">0</span>
+        <span id="viewCount">0</span>
     </div>
 
     <header id="navbar">
         <a href="#hero" class="logo">dexntzx<span>.</span></a>
         <nav>
-            <a href="#about">About</a>
-            <a href="#current-projects">Projects</a>
+            <a href="#" onclick="revealAndScroll('about')">About</a>
+            <a href="#" onclick="revealAndScroll('current-projects')">Projects</a>
         </nav>
     </header>
 
     <section id="hero">
-        <h1 class="reveal">Creative <br><span>Digital Space</span>.</h1>
-        <p class="reveal">Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
+        <h1 class="reveal active">Creative <br><span>Digital Space</span>.</h1>
+        <p class="reveal active">Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
         <div class="hero-buttons">
-            <a href="#about" class="btn reveal">Explore My World</a>
-            <a href="#current-projects" class="btn btn-secondary reveal">Something I'm working on</a>
+            <button onclick="revealAndScroll('about')" class="btn reveal active">Explore My World</button>
+            <button onclick="revealAndScroll('current-projects')" class="btn btn-secondary reveal active">Something I'm working on</button>
         </div>
     </section>
 
-    <section id="about">
-        <h2 class="section-title reveal">About Me</h2>
+    <section id="about" class="hidden-section">
+        <h2 class="section-title">About Me</h2>
         <div class="about-container">
-            <div class="about-text reveal">
-                <p>Hey there! I'm the mind behind <strong>dexntzx</strong>. I specialize in designing, developing, and experimenting with modern tech ecosystems.</p>
-                <p>This site serves as my personal command center. I love taking complex concepts and breaking them down into minimal, ultra-smooth user interfaces that feel natural to interact with.</p>
+            <div class="about-text">
+                <p>hello my name is currently unknown to most people because i dont tell people my name but you can call me dex, i like coding and working on a lot of projects at this point, i like to make friends and play minecraft together, this is my website i made that says things about me.</p>
             </div>
-            <div class="about-skills reveal">
+            <div class="about-skills">
                 <p style="margin-bottom: 1.5rem; font-weight: 600; color: var(--text-main);">Current Tech Stack:</p>
                 <div class="skills-grid">
                     <div class="skill-tag">Python</div>
@@ -292,15 +307,15 @@
         </div>
     </section>
 
-    <section id="current-projects">
-        <h2 class="section-title reveal">Current Focus</h2>
-        <div class="focus-text reveal">
+    <section id="current-projects" class="hidden-section">
+        <h2 class="section-title">Current Focus</h2>
+        <div class="focus-text">
             <p>I'm currently working on a <strong>Minecraft server</strong>, <strong>Roblox games</strong>, and learning <strong>Java coding</strong>.</p>
         </div>
     </section>
 
     <script>
-        // Smooth scroll & active navigation logic
+        // Sticky Navbar logic
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 30) {
@@ -310,42 +325,31 @@
             }
         });
 
-        // Scroll reveal system
-        const reveals = document.querySelectorAll('.reveal');
-        function revealOnScroll() {
-            for (let i = 0; i < reveals.length; i++) {
-                let windowHeight = window.innerHeight;
-                let elementTop = reveals[i].getBoundingClientRect().top;
-                let elementVisible = 80;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
-
-        // --- Global Press/Click Counter Logic ---
-        const counterDisplay = document.getElementById('clickCount');
-        
-        // Retrieve clicks from localStorage so it keeps counting up over visits
-        let totalClicks = localStorage.getItem('sitePressCount') ? parseInt(localStorage.getItem('sitePressCount')) : 0;
-        counterDisplay.innerText = totalClicks;
-
-        // Listen for a press anywhere on the entire page
-        document.body.addEventListener('click', () => {
-            totalClicks++;
-            localStorage.setItem('sitePressCount', totalClicks);
-            counterDisplay.innerText = totalClicks;
+        // Function to safely reveal sections and smoothly glide to them
+        function revealAndScroll(sectionId) {
+            const section = document.getElementById(sectionId);
             
-            // Subtle flash animation effect to show it registered the click
-            const counterWidget = document.getElementById('eyeCounter');
-            counterWidget.style.transform = 'scale(1.1)';
+            // Make section active and visible
+            section.classList.add('reveal-active');
+            
+            // Force child elements to display their inner layout properties immediately
+            const innerReveals = section.querySelectorAll('.reveal');
+            innerReveals.forEach(el => el.classList.add('active'));
+
+            // Smooth scroll down to the newly uncovered area
             setTimeout(() => {
-                counterWidget.style.transform = 'scale(1)';
-            }, 100);
-        });
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+
+        // --- Brand New Visit/Page-load Counter System ---
+        // Using a fresh local storage key ('dexntzx_total_views') to completely reset previous data
+        let currentViews = localStorage.getItem('dexntzx_total_views') ? parseInt(localStorage.getItem('dexntzx_total_views')) : 0;
+        
+        // Advance view count by 1 immediately upon page loading
+        currentViews++;
+        localStorage.setItem('dexntzx_total_views', currentViews);
+        document.getElementById('viewCount').innerText = currentViews;
     </script>
 </body>
 </html>
