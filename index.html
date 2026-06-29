@@ -143,8 +143,8 @@
         /* --- Enhanced Translucent Discord Rich Presence Card --- */
         .discord-status-box {
             width: 300px;
-            background: rgba(22, 15, 17, 0.5); /* 0.5 Transparency */
-            backdrop-filter: blur(16px);       /* High fidelity blur */
+            background: rgba(22, 15, 17, 0.5); 
+            backdrop-filter: blur(16px);       
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 71, 87, 0.15);
             border-radius: 20px;
@@ -190,7 +190,6 @@
             color: var(--text-main);
         }
 
-        /* Rich Presence Container */
         .presence-display {
             display: flex;
             gap: 1rem;
@@ -213,9 +212,7 @@
             transition: transform 0.3s ease;
         }
         
-        .presence-icon:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
+        .presence-icon:hover { transform: scale(1.05) rotate(2deg); }
 
         .presence-small-icon {
             position: absolute;
@@ -261,7 +258,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Smooth Live Progress Slider */
         .presence-timeline {
             width: 100%;
             margin-top: 0.4rem;
@@ -307,6 +303,107 @@
         @keyframes fadeInActivity {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Social Connections Directory Component --- */
+        .socials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .social-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(22, 15, 17, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 71, 87, 0.15);
+            padding: 1.25rem;
+            border-radius: 16px;
+            text-decoration: none;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: var(--transition-smooth);
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle 120px at var(--x, 0px) var(--y, 0px), rgba(255, 71, 87, 0.25), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .social-card:hover::before { opacity: 1; }
+        
+        .social-card:hover {
+            border-color: var(--accent-orange);
+            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.15);
+        }
+
+        .social-left-block {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            pointer-events: none;
+        }
+
+        .social-icon-box svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--text-muted);
+            transition: fill 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .social-card:hover .social-icon-box svg {
+            fill: var(--accent);
+            transform: scale(1.15) rotate(-4deg);
+        }
+
+        .social-info-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .social-app-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+        }
+
+        .social-display-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .social-username-handle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .social-redirect-arrow svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--text-muted);
+            opacity: 0.4;
+            transition: var(--transition-smooth);
+        }
+
+        .social-card:hover .social-redirect-arrow svg {
+            opacity: 1;
+            fill: var(--accent-orange);
+            transform: translateX(3px) translateY(-3px);
         }
 
         /* --- Mutual Toggling Sections --- */
@@ -491,6 +588,7 @@
         <nav>
             <a href="#" onclick="revealToggleAndScroll(event, 'about', this)">About</a>
             <a href="#" onclick="revealToggleAndScroll(event, 'current-projects', this)">Projects</a>
+            <a href="#" onclick="revealToggleAndScroll(event, 'socials', this)">Socials</a>
         </nav>
     </header>
 
@@ -501,7 +599,8 @@
                 <p>Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
                 <div class="hero-buttons">
                     <button id="btn-about" onclick="revealToggleAndScroll(event, 'about', this)" class="btn"><span>Explore My World</span></button>
-                    <button id="btn-projects" onclick="revealToggleAndScroll(event, 'current-projects', this)" class="btn"><span>Something I'm working on</span></button>
+                    <button id="btn-projects" onclick="revealToggleAndScroll(event, 'current-projects', this)" class="btn"><span>What I'm Building</span></button>
+                    <button id="btn-socials" onclick="revealToggleAndScroll(event, 'socials', this)" class="btn"><span>Connect With Me</span></button>
                 </div>
             </div>
             
@@ -546,6 +645,77 @@
         </div>
     </section>
 
+    <section id="socials" class="hidden-section">
+        <h2 class="section-title">Social Networks</h2>
+        <div class="socials-grid">
+            
+            <a href="https://www.tiktok.com/@dexntzx" target="_blank" rel="noopener noreferrer" class="social-card">
+                <div class="social-left-block">
+                    <div class="social-icon-box">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.02 1.6 4.17 1.12 1.25 2.7 1.93 4.34 2.02v3.77c-1.38-.02-2.75-.41-3.92-1.15-.65-.41-1.22-.94-1.66-1.57v7.45c.03 2.51-.87 5.01-2.58 6.85-1.92 2.02-4.75 3.04-7.52 2.72-2.91-.23-5.63-2.1-6.84-4.77-.96-2.07-1.07-4.5-.33-6.65.8-2.33 2.62-4.25 4.95-5.11 1.4-.54 2.92-.68 4.39-.42V11.2c-.88-.24-1.84-.13-2.65.28-.97.47-1.72 1.39-1.97 2.44-.39 1.44-.06 3.07.89 4.19 1 1.2 2.65 1.76 4.16 1.41 1.32-.26 2.44-1.28 2.87-2.53.16-.54.21-1.11.2-1.68V.02z"/></svg>
+                    </div>
+                    <div class="social-info-stack">
+                        <span class="social-app-label">TikTok</span>
+                        <span class="social-display-name">dex</span>
+                        <span class="social-username-handle">@dexntzx</span>
+                    </div>
+                </div>
+                <div class="social-redirect-arrow">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/@Dexntzx" target="_blank" rel="noopener noreferrer" class="social-card">
+                <div class="social-left-block">
+                    <div class="social-icon-box">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.516 0-9.387.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.387.508 9.387.508s7.517 0 9.387-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </div>
+                    <div class="social-info-stack">
+                        <span class="social-app-label">YouTube</span>
+                        <span class="social-display-name">Dexntzx</span>
+                        <span class="social-username-handle">@Dexntzx</span>
+                    </div>
+                </div>
+                <div class="social-redirect-arrow">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
+                </div>
+            </a>
+
+            <a href="https://discord.com/users/1391072149304774716" target="_blank" rel="noopener noreferrer" class="social-card">
+                <div class="social-left-block">
+                    <div class="social-icon-box">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.094 13.094 0 0 1-1.873-.894.077.077 0 0 1-.008-.128c.126-.093.252-.19.372-.287a.075.075 0 0 1 .077-.011c3.92 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.009c.12.099.246.195.373.289a.077.077 0 0 1-.006.127 12.298 12.298 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.156 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.156 2.418z"/></svg>
+                    </div>
+                    <div class="social-info-stack">
+                        <span class="social-app-label">Discord</span>
+                        <span class="social-display-name">dex</span>
+                        <span class="social-username-handle">e22.4</span>
+                    </div>
+                </div>
+                <div class="social-redirect-arrow">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
+                </div>
+            </a>
+
+            <a href="https://www.roblox.com/users/profile?username=Smurfcat1442" target="_blank" rel="noopener noreferrer" class="social-card">
+                <div class="social-left-block">
+                    <div class="social-icon-box">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.926 23.998L0 20.152 5.074 0l18.926 3.846-5.074 20.152zM15.111 9.063l-4.185-.851-1.111 4.414 4.185.851 1.111-4.414z"/></svg>
+                    </div>
+                    <div class="social-info-stack">
+                        <span class="social-app-label">Roblox</span>
+                        <span class="social-display-name">Smurfcat1442</span>
+                        <span class="social-username-handle">Smurfcat1442</span>
+                    </div>
+                </div>
+                <div class="social-redirect-arrow">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
     <script>
         // Your Verified Discord User ID String
         const DISCORD_USER_ID = "1391072149304774716"; 
@@ -560,12 +730,12 @@
             }
         });
 
-        // Dual Accordion Toggling Architecture
+        // Dynamic Accordion Toggling Architecture
         function revealToggleAndScroll(e, sectionId, buttonElement) {
             if (e) e.preventDefault();
             
             const targetSection = document.getElementById(sectionId);
-            const allSections = ['about', 'current-projects'];
+            const allSections = ['about', 'current-projects', 'socials'];
             const isAlreadyOpen = targetSection.classList.contains('reveal-active');
             
             allSections.forEach(id => {
@@ -579,6 +749,7 @@
                 targetSection.classList.add('reveal-active');
                 if(sectionId === 'about') document.getElementById('btn-about').classList.add('btn-active-state');
                 if(sectionId === 'current-projects') document.getElementById('btn-projects').classList.add('btn-active-state');
+                if(sectionId === 'socials') document.getElementById('btn-socials').classList.add('btn-active-state');
                 
                 setTimeout(() => {
                     targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -586,7 +757,7 @@
             }
         }
 
-        // Immersive 3D Tilt & Aura Tracker Logic
+        // Immersive 3D Tilt & Aura Tracker Logic (Hero Buttons)
         const interactiveButtons = document.querySelectorAll('.btn');
         interactiveButtons.forEach(button => {
             const innerText = button.querySelector('span');
@@ -617,6 +788,32 @@
             });
         });
 
+        // Interactive Mouse Radial Glow & Subtle Tilt Framework for Social Grid Cards
+        const socialCards = document.querySelectorAll('.social-card');
+        socialCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const boundaries = card.getBoundingClientRect();
+                const mouseX = e.clientX - boundaries.left;
+                const mouseY = e.clientY - boundaries.top;
+                
+                card.style.setProperty('--x', `${mouseX}px`);
+                card.style.setProperty('--y', `${mouseY}px`);
+                
+                const centerPointX = boundaries.width / 2;
+                const centerPointY = boundaries.height / 2;
+                const maxRotationDegrees = 6;
+                
+                const calculatedTiltX = ((centerPointY - mouseY) / centerPointY) * maxRotationDegrees;
+                const calculatedTiltY = ((mouseX - centerPointX) / centerPointX) * maxRotationDegrees;
+                
+                card.style.transform = `rotateX(${calculatedTiltX}deg) rotateY(${calculatedTiltY}deg) translateY(-4px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        });
+
         // Unique Page Visitor Load Counter Tracker
         let uniqueSiteViews = localStorage.getItem('dex_domain_views') ? parseInt(localStorage.getItem('dex_domain_views')) : 0;
         uniqueSiteViews++;
@@ -633,7 +830,7 @@
 
         // Helper logic to properly parse Lanyard's complex CDN image asset strings
         function formatAssetUrl(appId, assetId) {
-            if (!assetId) return 'https://i.imgur.com/8Km9tLL.png'; // Fallback icon
+            if (!assetId) return 'https://i.imgur.com/8Km9tLL.png'; 
             if (assetId.startsWith('mp:external/')) {
                 return `https://media.discordapp.net/external/${assetId.replace('mp:external/', '')}`;
             }
@@ -652,7 +849,6 @@
                 const nameEl = document.getElementById('discordName');
                 const contentContainer = document.getElementById('discordContent');
 
-                // Clear ongoing timeline render intervals between fetch requests
                 if(dynamicTimelineTracker) clearInterval(dynamicTimelineTracker);
 
                 if (!resData.success) {
@@ -663,12 +859,10 @@
 
                 const data = resData.data;
 
-                // Set user name
                 if (data.discord_user) {
                     nameEl.innerText = data.discord_user.global_name || data.discord_user.username;
                 }
 
-                // Update Status indicator color classes
                 dot.className = `status-dot ${data.discord_status}`;
 
                 let plainTextStatus = "Offline";
@@ -676,7 +870,6 @@
                 if(data.discord_status === "idle") plainTextStatus = "Idle";
                 if(data.discord_status === "online") plainTextStatus = "Online";
 
-                // Priority 1: Render Spotify Rich Card layout
                 if (data.listening_to_spotify && data.spotify) {
                     contentContainer.innerHTML = `
                         <div class="presence-display">
@@ -712,7 +905,6 @@
 
                     timeTotal.innerText = formatTimeSpan(totalDuration);
 
-                    // Local accurate frame loop updater for track timeline slider mechanics
                     function refreshTimelineSlider() {
                         const activeElapsed = Date.now() - startTimestamp;
                         const percentageComputed = Math.min((activeElapsed / totalDuration) * 100, 100);
@@ -730,20 +922,17 @@
                     return;
                 }
 
-                // Priority 2: Filter and render Games, Rich Presence Apps or Streams
                 const filteredActivities = data.activities ? data.activities.filter(act => act.type !== 4) : [];
                 
                 if (filteredActivities.length > 0) {
                     const primaryActivity = filteredActivities[0];
                     
-                    // Determine readable context types (Playing, Streaming, etc.)
                     let typeTextLabel = "Playing";
                     if (primaryActivity.type === 1) typeTextLabel = "Streaming";
                     if (primaryActivity.type === 2) typeTextLabel = "Listening to";
                     if (primaryActivity.type === 3) typeTextLabel = "Watching";
                     if (primaryActivity.type === 5) typeTextLabel = "Competing in";
 
-                    // Handle missing artwork images by using default values smoothly
                     let activityImgUrl = 'https://i.imgur.com/8Km9tLL.png';
                     if (primaryActivity.assets && primaryActivity.assets.large_image) {
                         activityImgUrl = formatAssetUrl(primaryActivity.application_id, primaryActivity.assets.large_image);
@@ -765,7 +954,6 @@
                     return;
                 }
 
-                // Priority 3: Custom plain text status statuses
                 const customTextStatusBlock = data.activities ? data.activities.find(act => act.type === 4) : null;
                 if (customTextStatusBlock) {
                     let customEmojiStr = "";
@@ -776,7 +964,6 @@
                     return;
                 }
 
-                // Priority 4: Total fallback baseline indicator
                 contentContainer.innerHTML = `<div class="discord-activity-fallback">Currently ${plainTextStatus}</div>`;
 
             } catch (err) {
@@ -784,9 +971,8 @@
             }
         }
 
-        // Initialize status updates and interval trackers
         fetchDiscordPresence();
-        setInterval(fetchDiscordPresence, 16000); // Poll API every 16s to respect rate limits
+        setInterval(fetchDiscordPresence, 16000); 
     </script>
 </body>
 </html>
