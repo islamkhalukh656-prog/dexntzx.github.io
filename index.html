@@ -3,976 +3,620 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dexntzx | Portfolio</title>
+    <title>dexntzx. | Creative Digital Space</title>
     <style>
-        /* --- Discord-Matching Color Palette --- */
+        /* Global Styles & Variables matching dexntzx aesthetic */
         :root {
-            --bg-color: #0a0708;       
-            --card-bg: #160f11;        
-            --text-main: #fbfafb;
-            --text-muted: #a6989a;
-            --accent: #ff4757;         /* Vibrant Coral Red */
-            --accent-orange: #ffa502;  /* Warm Gold/Orange */
-            --accent-gradient: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
-            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            
-            /* Status Colors */
-            --online: #23a55a;
-            --idle: #f0b232;
-            --dnd: #f23f43;
-            --offline: #80848e;
+            --bg-color: #090a10;
+            --card-bg: #11131e;
+            --text-main: #ffffff;
+            --text-muted: #7e8494;
+            --accent-purple: #9d4edd;
+            --accent-glow: rgba(157, 78, 221, 0.4);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --gradient-glow: linear-gradient(45deg, #ff6b6b, #ffbe53, #9d4edd);
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        body {
             background-color: var(--bg-color);
             color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
         }
 
-        /* --- Navbar --- */
+        /* Navbar Layout */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            transition: var(--transition-smooth);
-        }
-
-        header.scrolled {
-            background: rgba(10, 7, 8, 0.8);
-            backdrop-filter: blur(16px);
-            padding: 1rem 10%;
-            border-bottom: 1px solid rgba(255, 71, 87, 0.1);
+            padding: 2rem 10%;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-main);
-            text-decoration: none;
             letter-spacing: -0.5px;
         }
 
-        .logo span { color: var(--accent); }
-
-        nav a {
-            font-size: 0.95rem;
+        .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
-            font-weight: 500;
             margin-left: 2rem;
-            transition: var(--transition-smooth);
+            font-size: 0.95rem;
+            transition: color 0.2s;
         }
 
-        nav a:hover { color: var(--accent); }
-
-        /* --- Layout & Dual Column Hero --- */
-        section {
-            min-height: 100vh;
-            padding: 6rem 10% 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .nav-links a:hover {
+            color: var(--text-main);
         }
 
-        .hero-container {
+        /* Hero Main Section Layout */
+        main {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
-            gap: 2rem;
+            gap: 4rem;
+            padding: 4rem 10%;
             align-items: center;
-            width: 100%;
+            flex: 1;
         }
 
-        /* --- Right Column Profile Stack --- */
-        .profile-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            position: relative;
-        }
-
-        .profile-card {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            padding: 8px;
-            box-shadow: 0 20px 50px rgba(255, 71, 87, 0.15);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            padding: 4px;
-            background: var(--accent-gradient);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        .profile-avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--bg-color);
-        }
-
-        /* --- Enhanced Translucent Discord Rich Presence Card --- */
-        .discord-status-box {
-            width: 300px;
-            background: rgba(22, 15, 17, 0.5); 
-            backdrop-filter: blur(16px);       
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 71, 87, 0.15);
-            border-radius: 20px;
-            padding: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            transition: var(--transition-smooth);
-        }
-
-        .discord-status-box:hover {
-            border-color: rgba(255, 165, 2, 0.4);
-            box-shadow: 0 20px 40px rgba(255, 71, 87, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .discord-header {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 0.6rem;
-        }
-
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--offline);
-            box-shadow: 0 0 8px var(--offline);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .status-dot.online { background-color: var(--online); box-shadow: 0 0 10px var(--online); }
-        .status-dot.idle { background-color: var(--idle); box-shadow: 0 0 10px var(--idle); }
-        .status-dot.dnd { background-color: var(--dnd); box-shadow: 0 0 10px var(--dnd); }
-        .status-dot.offline { background-color: var(--offline); box-shadow: 0 0 10px var(--offline); }
-
-        .discord-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--text-main);
-        }
-
-        .presence-display {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-            animation: fadeInActivity 0.4s ease forwards;
-        }
-
-        .presence-asset-wrapper {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .presence-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            object-fit: cover;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .presence-icon:hover { transform: scale(1.05) rotate(2deg); }
-
-        .presence-small-icon {
-            position: absolute;
-            bottom: -4px;
-            right: -4px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid var(--card-bg);
-            background: var(--bg-color);
-        }
-
-        .presence-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .presence-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        .presence-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .presence-details, .presence-state {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .presence-timeline {
-            width: 100%;
-            margin-top: 0.4rem;
-        }
-
-        .timeline-bar-bg {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .timeline-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--accent-gradient);
-            border-radius: 10px;
-            transition: width 1s linear;
-        }
-
-        .timeline-stamps {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .discord-activity-fallback {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .discord-activity-fallback a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        @keyframes fadeInActivity {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Social Connections Directory Component --- */
-        .socials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
-            perspective: 1000px;
-        }
-
-        .social-card {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(22, 15, 17, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 71, 87, 0.15);
-            padding: 1.25rem;
-            border-radius: 16px;
-            text-decoration: none;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            transition: var(--transition-smooth);
-        }
-
-        .social-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle 120px at var(--x, 0px) var(--y, 0px), rgba(255, 71, 87, 0.25), transparent 80%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .social-card:hover::before { opacity: 1; }
-        
-        .social-card:hover {
-            border-color: var(--accent-orange);
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.15);
-        }
-
-        .social-left-block {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            pointer-events: none;
-        }
-
-        .social-icon-box svg {
-            width: 32px;
-            height: 32px;
-            fill: var(--text-muted);
-            transition: fill 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .social-card:hover .social-icon-box svg {
-            fill: var(--accent);
-            transform: scale(1.15) rotate(-4deg);
-        }
-
-        .social-info-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .social-app-label {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-        }
-
-        .social-display-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .social-username-handle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .social-redirect-arrow svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--text-muted);
-            opacity: 0.4;
-            transition: var(--transition-smooth);
-        }
-
-        .social-card:hover .social-redirect-arrow svg {
-            opacity: 1;
-            fill: var(--accent-orange);
-            transform: translateX(3px) translateY(-3px);
-        }
-
-        /* --- Mutual Toggling Sections --- */
-        .hidden-section {
-            display: none; 
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            border-top: 1px solid rgba(255, 71, 87, 0.05);
-        }
-
-        .hidden-section.reveal-active { display: flex; opacity: 1; transform: translateY(0); }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            position: relative;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- Hero Typography --- */
-        #hero h1 {
-            font-size: 4.5rem;
+        .hero-text h1 {
+            font-size: 3.5rem;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
+            margin-bottom: 1rem;
         }
 
-        #hero h1 span {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #hero p {
-            font-size: 1.35rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            perspective: 1000px; 
-        }
-
-        /* --- Immersive Gradient & 3D Interactive Buttons --- */
-        .btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2.4rem;
-            background: rgba(255, 255, 255, 0.03);
-            color: white;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            border-radius: 12px;
-            cursor: pointer;
-            border: 1px solid rgba(255, 71, 87, 0.3);
-            overflow: hidden;
-            user-select: none;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .btn span {
+        .hero-text h1 span {
+            color: var(--accent-purple);
             display: block;
-            pointer-events: none;
-            transition: transform 0.15s linear;
-            transform: translateZ(15px); 
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle 100px at var(--x, 0px) var(--y, 0px), rgba(255, 71, 87, 0.35), transparent 80%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
         }
 
-        .btn:hover::before { opacity: 1; }
-        .btn:hover { border-color: var(--accent-orange); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.15); }
-        .btn-active-state { background: rgba(255, 71, 87, 0.15) !important; border-color: var(--accent) !important; }
+        /* Hero Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
 
-        /* --- About Section Formatting --- */
-        .about-container {
-            display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 4rem;
-            align-items: start;
+        .btn {
+            padding: 0.8rem 1.8rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-purple);
+            color: var(--text-main);
+            border: none;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-purple);
+            background-color: rgba(157, 78, 221, 0.05);
+        }
+
+        /* Right Side: Profile & Audio Widgets Grid */
+        .hero-widgets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
             width: 100%;
         }
 
-        .about-text p {
-            color: var(--text-muted);
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
+        /* Status Widget */
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 320px;
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
+        .avatar-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            padding: 6px;
+            background: var(--gradient-glow);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .skill-tag {
-            background: var(--card-bg);
-            padding: 0.8rem;
-            text-align: center;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 71, 87, 0.05);
-            transition: var(--transition-smooth);
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            padding: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .skill-tag:hover { border-color: var(--accent-orange); color: var(--accent-orange); transform: translateY(-4px); }
+        .avatar-inner img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-        /* --- Project Focus Formatting --- */
-        .focus-text { font-size: 1.5rem; color: var(--text-muted); max-width: 850px; line-height: 1.8; }
-        .focus-text strong { color: var(--text-main); border-bottom: 2px dashed var(--accent); }
+        .status-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.2rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
 
-        /* --- Eye Traffic Counter --- */
-        .eye-counter {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: rgba(22, 15, 17, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 71, 87, 0.15);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
+        .status-user {
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            font-size: 1rem;
             font-weight: 700;
-            color: var(--text-main);
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            user-select: none;
+            font-size: 1.05rem;
         }
 
-        .eye-counter svg { width: 20px; height: 20px; fill: var(--accent); }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #7e8494;
+            border-radius: 50%;
+            display: inline-block;
+        }
 
-        @media (max-width: 968px) {
-            .hero-container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
-            .hero-buttons { justify-content: center; }
-            .profile-card { width: 240px; height: 240px; }
-            .discord-status-box { width: 280px; }
+        .status-dot.active {
+            background-color: #2ec4b6;
+            box-shadow: 0 0 10px rgba(46, 196, 182, 0.6);
+        }
+
+        .status-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-left: 1rem;
+        }
+
+        /* Custom Spotify-Like Music Player Card */
+        .music-player {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .track-art {
+            width: 52px;
+            height: 52px;
+            border-radius: 6px;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .track-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .track-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .ctrl-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .ctrl-btn:hover {
+            color: var(--text-main);
+        }
+
+        .ctrl-main {
+            font-size: 1.6rem;
+            color: var(--text-main);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--text-main);
+            border-radius: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Social Links Grid */
+        .socials-container {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .social-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .social-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .social-platform {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .social-handle {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .icon-arrow {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                padding: 2rem 5%;
+            }
             header { padding: 1.5rem 5%; }
-            section { padding: 6rem 5% 3rem; }
-            #hero h1 { font-size: 2.8rem; }
-            .about-container { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-text h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="eye-counter" id="eyeCounter">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-        </svg>
-        <span id="viewCount">0</span>
-    </div>
-
-    <header id="navbar">
-        <a href="#hero" class="logo">dexntzx<span>.</span></a>
-        <nav>
-            <a href="#" onclick="revealToggleAndScroll(event, 'about', this)">About</a>
-            <a href="#" onclick="revealToggleAndScroll(event, 'current-projects', this)">Projects</a>
-            <a href="#" onclick="revealToggleAndScroll(event, 'socials', this)">Socials</a>
-        </nav>
+    <header>
+        <div class="logo">dexntzx.</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+        </div>
     </header>
 
-    <section id="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1>Creative <br><span>Digital Space</span>.</h1>
-                <p>Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
-                <div class="hero-buttons">
-                    <button id="btn-about" onclick="revealToggleAndScroll(event, 'about', this)" class="btn"><span>Explore My World</span></button>
-                    <button id="btn-projects" onclick="revealToggleAndScroll(event, 'current-projects', this)" class="btn"><span>What I'm Building</span></button>
-                    <button id="btn-socials" onclick="revealToggleAndScroll(event, 'socials', this)" class="btn"><span>Connect With Me</span></button>
-                </div>
-            </div>
+    <main>
+        <div class="hero-text">
+            <h1>Creative<br><span>Digital Space.</span></h1>
+            <p>Welcome to my official domain. I shape ideas into polished, high-performing web realities.</p>
             
-            <div class="profile-wrapper">
-                <div class="profile-card">
-                    <img src="avatar.png" alt="Discord Profile Avatar" class="profile-avatar" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
+            <div class="cta-buttons">
+                <a href="#world" class="btn btn-primary">Explore My World</a>
+                <a href="#work" class="btn btn-secondary">Something I'm working on</a>
+            </div>
+        </div>
+
+        <div class="hero-widgets">
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <div class="avatar-inner">
+                        <img src="./avatar.png" alt="Avatar">
+                    </div>
                 </div>
-                
-                <div class="discord-status-box">
-                    <div class="discord-header">
-                        <div class="status-dot" id="discordDot"></div>
-                        <div class="discord-name" id="discordName">Connecting...</div>
+                <div class="status-box">
+                    <div class="status-user">
+                        <span class="status-dot" id="statusDot"></span>
+                        dex_
                     </div>
-                    <div id="discordContent">
-                        <div class="discord-activity-fallback">Syncing presence data...</div>
+                    <div class="status-text" id="statusText">Loading status...</div>
+                </div>
+            </div>
+
+            <div class="music-player">
+                <div class="player-header">
+                    <span>Listening to Playlist</span>
+                    <span style="font-size: 1rem;">🎵</span>
+                </div>
+                <div class="player-info">
+                    <div class="track-art" id="trackArt">💿</div>
+                    <div class="track-details">
+                        <div class="track-name" id="trackName">Track Title</div>
+                        <div class="track-artist" id="trackArtist">Artist Name</div>
                     </div>
+                </div>
+                <div class="player-controls">
+                    <button class="ctrl-btn" id="prevBtn">⏮</button>
+                    <button class="ctrl-btn ctrl-main" id="playBtn">▶</button>
+                    <button class="ctrl-btn" id="nextBtn">⏭</button>
+                </div>
+                <div class="progress-container">
+                    <span id="currentTime">0:00</span>
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="duration">0:00</span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="about" class="hidden-section">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-container">
-            <div class="about-text">
-                <p>hello my name is currently unknown to most people because i dont tell people my name but you can call me dex, i like coding and working on a lot of projects at this point, i like to make friends and play minecraft together, this is my website i made that says things about me.</p>
-            </div>
-            <div class="about-skills">
-                <p style="margin-bottom: 1.5rem; font-weight: 600; color: var(--text-main);">Current Tech Stack:</p>
-                <div class="skills-grid">
-                    <div class="skill-tag">Python</div>
-                    <div class="skill-tag">Lua Script</div>
+        <div class="socials-container">
+            <a href="https://twitter.com/explysm" target="_blank" class="social-card">
+                <div class="social-info">
+                    <span class="social-platform">X / Twitter</span>
+                    <span class="social-handle">explysm</span>
                 </div>
-            </div>
+                <span class="icon-arrow">↗</span>
+            </a>
+            <a href="https://reddit.com/u/Agreeable_Elk2688" target="_blank" class="social-card">
+                <div class="social-info">
+                    <span class="social-platform">Reddit</span>
+                    <span class="social-handle">Agreeable_Elk2688</span>
+                </div>
+                <span class="icon-arrow">↗</span>
+            </a>
+            <a href="https://tiktok.com/@asnced" target="_blank" class="social-card">
+                <div class="social-info">
+                    <span class="social-platform">TikTok</span>
+                    <span class="social-handle">asnced</span>
+                </div>
+                <span class="icon-arrow">↗</span>
+            </a>
+            <a href="https://instagram.com/huxhtml" target="_blank" class="social-card">
+                <div class="social-info">
+                    <span class="social-platform">Instagram</span>
+                    <span class="social-handle">huxhtml</span>
+                </div>
+                <span class="icon-arrow">↗</span>
+            </a>
         </div>
-    </section>
-
-    <section id="current-projects" class="hidden-section">
-        <h2 class="section-title">Current Focus</h2>
-        <div class="focus-text">
-            <p>I'm currently working on a <strong>Minecraft server</strong>, <strong>Roblox games</strong>, and learning <strong>Java coding</strong>.</p>
-        </div>
-    </section>
-
-    <section id="socials" class="hidden-section">
-        <h2 class="section-title">Social Networks</h2>
-        <div class="socials-grid">
-            
-            <a href="https://www.tiktok.com/@dexntzx" target="_blank" rel="noopener noreferrer" class="social-card">
-                <div class="social-left-block">
-                    <div class="social-icon-box">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.02 1.6 4.17 1.12 1.25 2.7 1.93 4.34 2.02v3.77c-1.38-.02-2.75-.41-3.92-1.15-.65-.41-1.22-.94-1.66-1.57v7.45c.03 2.51-.87 5.01-2.58 6.85-1.92 2.02-4.75 3.04-7.52 2.72-2.91-.23-5.63-2.1-6.84-4.77-.96-2.07-1.07-4.5-.33-6.65.8-2.33 2.62-4.25 4.95-5.11 1.4-.54 2.92-.68 4.39-.42V11.2c-.88-.24-1.84-.13-2.65.28-.97.47-1.72 1.39-1.97 2.44-.39 1.44-.06 3.07.89 4.19 1 1.2 2.65 1.76 4.16 1.41 1.32-.26 2.44-1.28 2.87-2.53.16-.54.21-1.11.2-1.68V.02z"/></svg>
-                    </div>
-                    <div class="social-info-stack">
-                        <span class="social-app-label">TikTok</span>
-                        <span class="social-display-name">dex</span>
-                        <span class="social-username-handle">@dexntzx</span>
-                    </div>
-                </div>
-                <div class="social-redirect-arrow">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
-                </div>
-            </a>
-
-            <a href="https://www.youtube.com/@Dexntzx" target="_blank" rel="noopener noreferrer" class="social-card">
-                <div class="social-left-block">
-                    <div class="social-icon-box">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.516 0-9.387.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.387.508 9.387.508s7.517 0 9.387-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    </div>
-                    <div class="social-info-stack">
-                        <span class="social-app-label">YouTube</span>
-                        <span class="social-display-name">Dexntzx</span>
-                        <span class="social-username-handle">@Dexntzx</span>
-                    </div>
-                </div>
-                <div class="social-redirect-arrow">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
-                </div>
-            </a>
-
-            <a href="https://discord.com/users/1391072149304774716" target="_blank" rel="noopener noreferrer" class="social-card">
-                <div class="social-left-block">
-                    <div class="social-icon-box">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.094 13.094 0 0 1-1.873-.894.077.077 0 0 1-.008-.128c.126-.093.252-.19.372-.287a.075.075 0 0 1 .077-.011c3.92 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.009c.12.099.246.195.373.289a.077.077 0 0 1-.006.127 12.298 12.298 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.156 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.156 2.418z"/></svg>
-                    </div>
-                    <div class="social-info-stack">
-                        <span class="social-app-label">Discord</span>
-                        <span class="social-display-name">dex</span>
-                        <span class="social-username-handle">e22.4</span>
-                    </div>
-                </div>
-                <div class="social-redirect-arrow">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
-                </div>
-            </a>
-
-            <a href="https://www.roblox.com/users/profile?username=Smurfcat1442" target="_blank" rel="noopener noreferrer" class="social-card">
-                <div class="social-left-block">
-                    <div class="social-icon-box">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.926 23.998L0 20.152 5.074 0l18.926 3.846-5.074 20.152zM15.111 9.063l-4.185-.851-1.111 4.414 4.185.851 1.111-4.414z"/></svg>
-                    </div>
-                    <div class="social-info-stack">
-                        <span class="social-app-label">Roblox</span>
-                        <span class="social-display-name">Smurfcat1442</span>
-                        <span class="social-username-handle">Smurfcat1442</span>
-                    </div>
-                </div>
-                <div class="social-redirect-arrow">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5h5v2H7v10h10v-3h2v5H5V5zm9 0h5v5h-2V7.414l-7 7L8.586 13l7-7H14V5z"/></svg>
-                </div>
-            </a>
-
-        </div>
-    </section>
+    </main>
 
     <script>
-        // Your Verified Discord User ID String
-        const DISCORD_USER_ID = "1391072149304774716"; 
+        // Clean Space-free Track Configuration
+        const playlist = [
+            { name: "Hello Juliet", artist: "Clarion", src: "./Hello_Juliet.mp3" },
+            { name: "Meant To Be", artist: "320kbps", src: "./Meant_To_Be__320kbps_.mp3" },
+            { name: "Unslept", artist: "Miraidempa", src: "./Unslept.mp3" },
+            { name: "Waiting", artist: "Audio Track", src: "./Waiting.mp3" },
+            { name: "Duskydemise", artist: "Bedrott", src: "./bedrott.mp3" },
+            { name: "Faded Childhood", artist: "Crystal", src: "./faded_childhood.mp3" },
+            { name: "Loser Club", artist: "320kbps", src: "./loser_club__320kbps_.mp3" },
+            { name: "Misery", artist: "prod. pupsies", src: "./misery.mp3" },
+            { name: "Sometimes", artist: "Mattyeux & Princess Chelsea", src: "./sometimes.mp3" },
+            { name: "Stalk Ur Socials", artist: "Audio Track", src: "./stalk_ur_socials.mp3" },
+            { name: "Unhappy", artist: "Audio Track", src: "./unhappy.mp3" },
+            { name: "Why", artist: "h4teboy", src: "./why.mp3" }
+        ];
 
-        // Sticky Header Backdrop control
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 30) {
-                navbar.classList.add('scrolled');
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        const audio = new Audio();
+
+        // Elements Selection
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const trackName = document.getElementById('trackName');
+        const trackArtist = document.getElementById('trackArtist');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const progressFill = document.getElementById('progressFill');
+        const progressBar = document.getElementById('progressBar');
+        
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        // Load Track Configuration
+        function loadTrack(index) {
+            const track = playlist[index];
+            audio.src = track.src;
+            trackName.textContent = track.name;
+            trackArtist.textContent = track.artist;
+            progressFill.style.width = '0%';
+            currentTimeEl.textContent = "0:00";
+            durationEl.textContent = "0:00";
+        }
+
+        // Play and Pause Toggle
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playBtn.textContent = "▶";
+                updateStatusWidget(false);
             } else {
-                navbar.classList.remove('scrolled');
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playBtn.textContent = "⏸";
+                    updateStatusWidget(true);
+                }).catch(err => console.log("Playback interaction error:", err));
             }
-        });
+        }
 
-        // Dynamic Accordion Toggling Architecture
-        function revealToggleAndScroll(e, sectionId, buttonElement) {
-            if (e) e.preventDefault();
-            
-            const targetSection = document.getElementById(sectionId);
-            const allSections = ['about', 'current-projects', 'socials'];
-            const isAlreadyOpen = targetSection.classList.contains('reveal-active');
-            
-            allSections.forEach(id => {
-                document.getElementById(id).classList.remove('reveal-active');
-            });
-            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('btn-active-state'));
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) audio.play();
+        }
 
-            if (isAlreadyOpen) {
-                document.getElementById('hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) audio.play();
+        }
+
+        // Live Audio Time and Track Progress Management
+        function updateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            if (!duration) return;
+            
+            const progressPercent = (currentTime / duration) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+
+            // Format timestamp values
+            currentTimeEl.textContent = formatTime(currentTime);
+            durationEl.textContent = formatTime(duration);
+        }
+
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            if (duration) {
+                audio.currentTime = (clickX / width) * duration;
+            }
+        }
+
+        function formatTime(time) {
+            const mins = Math.floor(time / 60);
+            const secs = Math.floor(time % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Synchronize the profile status dynamically with the player track activity
+        function updateStatusWidget(playing) {
+            if (playing) {
+                statusDot.classList.add('active');
+                statusText.innerHTML = `Listening to <b>${playlist[currentTrackIndex].name}</b>`;
             } else {
-                targetSection.classList.add('reveal-active');
-                if(sectionId === 'about') document.getElementById('btn-about').classList.add('btn-active-state');
-                if(sectionId === 'current-projects') document.getElementById('btn-projects').classList.add('btn-active-state');
-                if(sectionId === 'socials') document.getElementById('btn-socials').classList.add('btn-active-state');
-                
-                setTimeout(() => {
-                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 50);
+                statusDot.classList.remove('active');
+                statusText.textContent = "Idling... Content offline.";
             }
         }
 
-        // Immersive 3D Tilt & Aura Tracker Logic (Hero Buttons)
-        const interactiveButtons = document.querySelectorAll('.btn');
-        interactiveButtons.forEach(button => {
-            const innerText = button.querySelector('span');
-            button.addEventListener('mousemove', (e) => {
-                const boundaries = button.getBoundingClientRect();
-                const mouseX = e.clientX - boundaries.left;
-                const mouseY = e.clientY - boundaries.top;
-                
-                button.style.setProperty('--x', `${mouseX}px`);
-                button.style.setProperty('--y', `${mouseY}px`);
-                
-                const centerPointX = boundaries.width / 2;
-                const centerPointY = boundaries.height / 2;
-                const maxRotationDegrees = 10; 
-                
-                const calculatedTiltX = ((centerPointY - mouseY) / centerPointY) * maxRotationDegrees;
-                const calculatedTiltY = ((mouseX - centerPointX) / centerPointX) * maxRotationDegrees;
-                
-                button.style.transform = `rotateX(${calculatedTiltX}deg) rotateY(${calculatedTiltY}deg) translateY(-3px)`;
-                if (innerText) {
-                    innerText.style.transform = `translateZ(20px) translateX(${(mouseX - centerPointX) * 0.15}px) translateY(${(mouseY - centerPointY) * 0.15}px)`;
-                }
-            });
+        // Register DOM EventListeners
+        playBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextTrack);
+        progressBar.addEventListener('click', setProgress);
 
-            button.addEventListener('mouseleave', () => {
-                button.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
-                if (innerText) { innerText.style.transform = 'translateZ(15px) translateX(0px) translateY(0px)'; }
-            });
+        // Run Initial Setup on document loading finish
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTrack(currentTrackIndex);
+            updateStatusWidget(false);
         });
-
-        // Interactive Mouse Radial Glow & Subtle Tilt Framework for Social Grid Cards
-        const socialCards = document.querySelectorAll('.social-card');
-        socialCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const boundaries = card.getBoundingClientRect();
-                const mouseX = e.clientX - boundaries.left;
-                const mouseY = e.clientY - boundaries.top;
-                
-                card.style.setProperty('--x', `${mouseX}px`);
-                card.style.setProperty('--y', `${mouseY}px`);
-                
-                const centerPointX = boundaries.width / 2;
-                const centerPointY = boundaries.height / 2;
-                const maxRotationDegrees = 6;
-                
-                const calculatedTiltX = ((centerPointY - mouseY) / centerPointY) * maxRotationDegrees;
-                const calculatedTiltY = ((mouseX - centerPointX) / centerPointX) * maxRotationDegrees;
-                
-                card.style.transform = `rotateX(${calculatedTiltX}deg) rotateY(${calculatedTiltY}deg) translateY(-4px)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
-            });
-        });
-
-        // Unique Page Visitor Load Counter Tracker
-        let uniqueSiteViews = localStorage.getItem('dex_domain_views') ? parseInt(localStorage.getItem('dex_domain_views')) : 0;
-        uniqueSiteViews++;
-        localStorage.setItem('dex_domain_views', uniqueSiteViews);
-        document.getElementById('viewCount').innerText = uniqueSiteViews;
-
-        // Clean formatting helper for track/activity duration numbers
-        function formatTimeSpan(milliseconds) {
-            if (isNaN(milliseconds) || milliseconds < 0) return "0:00";
-            const seconds = Math.floor((milliseconds / 1000) % 60);
-            const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
-            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-
-        // Helper logic to properly parse Lanyard's complex CDN image asset strings
-        function formatAssetUrl(appId, assetId) {
-            if (!assetId) return 'https://i.imgur.com/8Km9tLL.png'; 
-            if (assetId.startsWith('mp:external/')) {
-                return `https://media.discordapp.net/external/${assetId.replace('mp:external/', '')}`;
-            }
-            return `https://cdn.discordapp.com/app-assets/${appId}/${assetId}.png`;
-        }
-
-        let dynamicTimelineTracker = null;
-
-        // --- Live Lanyard Discord Presence Integration ---
-        async function fetchDiscordPresence() {
-            try {
-                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
-                const resData = await response.json();
-                
-                const dot = document.getElementById('discordDot');
-                const nameEl = document.getElementById('discordName');
-                const contentContainer = document.getElementById('discordContent');
-
-                if(dynamicTimelineTracker) clearInterval(dynamicTimelineTracker);
-
-                if (!resData.success) {
-                    nameEl.innerText = "Setup Required";
-                    contentContainer.innerHTML = `<div class="discord-activity-fallback">Click to join <a href='https://lanyard.rest' target='_blank'>lanyard.rest</a> to enable status tracking sync.</div>`;
-                    return;
-                }
-
-                const data = resData.data;
-
-                if (data.discord_user) {
-                    nameEl.innerText = data.discord_user.global_name || data.discord_user.username;
-                }
-
-                dot.className = `status-dot ${data.discord_status}`;
-
-                let plainTextStatus = "Offline";
-                if(data.discord_status === "dnd") plainTextStatus = "Do Not Disturb";
-                if(data.discord_status === "idle") plainTextStatus = "Idle";
-                if(data.discord_status === "online") plainTextStatus = "Online";
-
-                if (data.listening_to_spotify && data.spotify) {
-                    contentContainer.innerHTML = `
-                        <div class="presence-display">
-                            <div class="presence-asset-wrapper">
-                                <img class="presence-icon" src="${data.spotify.album_art_url}" alt="Album Art">
-                                <img class="presence-small-icon" src="https://i.imgur.com/vH9tX5Z.png" alt="Spotify">
-                            </div>
-                            <div class="presence-info">
-                                <span class="presence-type">Listening to Spotify</span>
-                                <span class="presence-title">${data.spotify.song}</span>
-                                <span class="presence-details">by ${data.spotify.artist}</span>
-                                <span class="presence-state">on ${data.spotify.album}</span>
-                            </div>
-                        </div>
-                        <div class="presence-timeline">
-                            <div class="timeline-bar-bg">
-                                <div class="timeline-bar-fill" id="trackProgressFill"></div>
-                            </div>
-                            <div class="timeline-stamps">
-                                <span id="trackTimeCurrent">0:00</span>
-                                <span id="trackTimeTotal">0:00</span>
-                            </div>
-                        </div>
-                    `;
-
-                    const fillBar = document.getElementById('trackProgressFill');
-                    const timeCurrent = document.getElementById('trackTimeCurrent');
-                    const timeTotal = document.getElementById('trackTimeTotal');
-
-                    const startTimestamp = data.spotify.timestamps.start;
-                    const endTimestamp = data.spotify.timestamps.end;
-                    const totalDuration = endTimestamp - startTimestamp;
-
-                    timeTotal.innerText = formatTimeSpan(totalDuration);
-
-                    function refreshTimelineSlider() {
-                        const activeElapsed = Date.now() - startTimestamp;
-                        const percentageComputed = Math.min((activeElapsed / totalDuration) * 100, 100);
-                        
-                        fillBar.style.width = `${percentageComputed}%`;
-                        timeCurrent.innerText = formatTimeSpan(activeElapsed);
-                        
-                        if(activeElapsed >= totalDuration) {
-                            clearInterval(dynamicTimelineTracker);
-                        }
-                    }
-
-                    refreshTimelineSlider();
-                    dynamicTimelineTracker = setInterval(refreshTimelineSlider, 1000);
-                    return;
-                }
-
-                const filteredActivities = data.activities ? data.activities.filter(act => act.type !== 4) : [];
-                
-                if (filteredActivities.length > 0) {
-                    const primaryActivity = filteredActivities[0];
-                    
-                    let typeTextLabel = "Playing";
-                    if (primaryActivity.type === 1) typeTextLabel = "Streaming";
-                    if (primaryActivity.type === 2) typeTextLabel = "Listening to";
-                    if (primaryActivity.type === 3) typeTextLabel = "Watching";
-                    if (primaryActivity.type === 5) typeTextLabel = "Competing in";
-
-                    let activityImgUrl = 'https://i.imgur.com/8Km9tLL.png';
-                    if (primaryActivity.assets && primaryActivity.assets.large_image) {
-                        activityImgUrl = formatAssetUrl(primaryActivity.application_id, primaryActivity.assets.large_image);
-                    }
-
-                    contentContainer.innerHTML = `
-                        <div class="presence-display">
-                            <div class="presence-asset-wrapper">
-                                <img class="presence-icon" src="${activityImgUrl}" alt="Activity Art" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
-                            </div>
-                            <div class="presence-info">
-                                <span class="presence-type">${typeTextLabel}</span>
-                                <span class="presence-title">${primaryActivity.name}</span>
-                                ${primaryActivity.details ? `<span class="presence-details">${primaryActivity.details}</span>` : ''}
-                                ${primaryActivity.state ? `<span class="presence-state">${primaryActivity.state}</span>` : ''}
-                            </div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                const customTextStatusBlock = data.activities ? data.activities.find(act => act.type === 4) : null;
-                if (customTextStatusBlock) {
-                    let customEmojiStr = "";
-                    if (customTextStatusBlock.emoji && customTextStatusBlock.emoji.name) {
-                        customEmojiStr = `${customTextStatusBlock.emoji.name} `;
-                    }
-                    contentContainer.innerHTML = `<div class="discord-activity-fallback">Status: <em>"${customEmojiStr}${customTextStatusBlock.state || ''}"</em></div>`;
-                    return;
-                }
-
-                contentContainer.innerHTML = `<div class="discord-activity-fallback">Currently ${plainTextStatus}</div>`;
-
-            } catch (err) {
-                document.getElementById('discordContent').innerHTML = `<div class="discord-activity-fallback">Status framework link down.</div>`;
-            }
-        }
-
-        fetchDiscordPresence();
-        setInterval(fetchDiscordPresence, 16000); 
     </script>
 </body>
 </html>
